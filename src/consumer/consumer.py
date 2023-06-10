@@ -1,8 +1,10 @@
-from src.utils.constants import TOPIC_NAME, CONFIG_PATH
-from src.consumer import logger
 from argparse import ArgumentParser
 from configparser import ConfigParser
-from confluent_kafka import Consumer, OFFSET_BEGINNING
+
+from confluent_kafka import OFFSET_BEGINNING, Consumer
+
+from src.consumer import logger
+from src.utils.constants import CONFIG_PATH, TOPIC_NAME
 
 if __name__ == "__main__":
     parser = ArgumentParser()

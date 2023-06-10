@@ -1,9 +1,11 @@
-from configparser import ConfigParser
-from confluent_kafka import Producer
-from src.producer import logger
-from src.utils.constants import TOPIC_NAME, CONFIG_PATH
-from src.utils.models import Transaction
 import json
+from configparser import ConfigParser
+
+from confluent_kafka import Producer
+
+from src.producer import logger
+from src.utils.constants import CONFIG_PATH, TOPIC_NAME
+from src.utils.models import Transaction
 
 config_parser = ConfigParser()
 config_parser.read_file(open(CONFIG_PATH))

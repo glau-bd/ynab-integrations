@@ -1,17 +1,15 @@
-import os
-
 import logging
+import os
 from typing import Dict, List
 
 import dotenv
 from pydantic import ValidationError
 from ynab_api import ApiClient, ApiException, Configuration
-
 # from ynab_api.apis import TransactionsApi
 from ynab_api.models import SaveTransaction, SaveTransactionsWrapper
 
-from utils.models import Transaction
 from utils.constants import TOPIC_NAME
+from utils.models import Transaction
 
 dotenv.load_dotenv()
 
