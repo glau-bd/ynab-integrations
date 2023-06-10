@@ -3,14 +3,24 @@ name = "ynab-integrations"
 version = "0.1.0"
 description = ""
 authors = ["Gerald Lau <gerald.lau.95@gmail.com>"]
-license = "GPL3"
+readme = "README.md"
+packages = [
+    { include = "src" }
+]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-black = "^22.6.0"
+python = "^3.11"
+pydantic = "^1.10.9"
+confluent-kafka = "^2.1.1"
+python-dotenv = "^1.0.0"
+ynab-api = "^1.0.0"
+black = "23.3.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+isort = "^5.12.0"
+mypy = "^1.3.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
