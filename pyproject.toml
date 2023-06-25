@@ -3,14 +3,19 @@ name = "ynab-integrations"
 version = "0.1.0"
 description = ""
 authors = ["Gerald Lau <gerald.lau.95@gmail.com>"]
-license = "GPL3"
+readme = "README.md"
+packages = [{include = "ynab_integrations"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-black = "^22.6.0"
+aws-cdk-lib = "2.84.0"
+constructs = "^10.2.52"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.2"
+black = "^23.3.0"
+isort = "^5.12.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
