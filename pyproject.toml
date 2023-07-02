@@ -10,6 +10,9 @@ packages = [{include = "ynab_integrations"}]
 python = "^3.10"
 aws-cdk-lib = "2.84.0"
 constructs = "^10.2.52"
+imap-tools = "^1.0.0"
+pydantic = "^2.0"
+ynab-api = {git = "https://github.com/dmlerner/ynab-api.git"}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.2"

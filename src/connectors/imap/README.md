@@ -1,0 +1,3 @@
+1. [Optional] Create a dedicated email account that receives mail from you actual main account based on forwarding rules. This is to limit the impact if/when your credentials get leaked.
+2. Add an entry in the connector_config.ini for this IMAP account
+   1. For gmail, you will need to enable IMAP access via dedicated app passwords. Head to https://myaccount.google.com/apppasswords and create an app password (Purpose: Gmail, Name: YNAB Integrations). Note that this is an insecure method of authentication.
