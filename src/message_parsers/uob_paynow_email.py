@@ -16,6 +16,7 @@ class UobPaynowEmailParser(BaseMessageParser):
     pattern = re.compile(
         r"You made a PayNow transfer of .* ([\d.]+) to PayNow ID ending with ([\w]+) at\r?\n([\d:]+[APM]+), ([\d]+-[A-Za-z]+-\d+)"
     )
+    accounts_section = "uob_paynow_email_accounts"
 
     def accepts(self, message: str) -> bool:
         return bool(self.pattern.search(message))
@@ -38,7 +39,7 @@ class UobPaynowEmailParser(BaseMessageParser):
             logger.exception(e)
             transaction_datetime = datetime.now()
         try:
-            account_id = self.get_ynab_account_id("paynow")
+            account_id = self.get_ynab_account_id("default")
             assert account_id, "Account ID is empty"
         except Exception as e:
             logger.warning("Failed to get YNAB account ID")

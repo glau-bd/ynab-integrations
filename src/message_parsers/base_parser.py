@@ -15,6 +15,7 @@ class BaseMessageParser(ABC):
     """Base class that parses message contents using regex parsing"""
 
     pattern: re.Pattern
+    accounts_section: str
 
     @abstractmethod
     def accepts(self, message: str) -> bool:
@@ -26,4 +27,4 @@ class BaseMessageParser(ABC):
         raise NotImplementedError()
 
     def get_ynab_account_id(self, banking_account_identier: str) -> str:
-        return config_parser["accounts"][banking_account_identier]
+        return config_parser[self.accounts_section][banking_account_identier]

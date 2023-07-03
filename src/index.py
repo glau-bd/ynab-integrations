@@ -10,7 +10,7 @@ from ynab_api.models import SaveTransaction, SaveTransactionsWrapper
 from src.connectors import get_active_connectors
 from src.message_parsers import BaseMessageParser, message_parsers
 from src.utils.constants import YNAB_CONFIG_PATH
-from utils.models import Transaction
+from src.utils.models import Transaction
 
 logger = logging.getLogger(__name__)
 handler = logging.StreamHandler(sys.stdout)
@@ -22,9 +22,9 @@ logger.addHandler(handler)
 config_parser = ConfigParser()
 config_parser.read_file(open(YNAB_CONFIG_PATH))
 
-YNAB_ACCESS_TOKEN = config_parser["auth"]["YNAB_ACCESS_TOKEN"]
-YNAB_BUDGET_ID = config_parser["auth"]["YNAB_BUDGET_ID"]
-YNAB_API_BASE_URL = config_parser["auth"]["YNAB_API_BASE_URL"]
+YNAB_ACCESS_TOKEN = config_parser["config"]["YNAB_ACCESS_TOKEN"]
+YNAB_BUDGET_ID = config_parser["config"]["YNAB_BUDGET_ID"]
+YNAB_API_BASE_URL = config_parser["config"]["YNAB_API_BASE_URL"]
 SUCCESS = {"statusCode": 200}
 
 CONFIGURATION = Configuration(
@@ -67,15 +67,20 @@ def write_transactions(transactions: List[SaveTransaction]):
     Raises:
         e: ApiException
     """
-    with ApiClient(CONFIGURATION) as api_client:
-        api_instance = TransactionsApi(api_client)
-        data = SaveTransactionsWrapper(transactions=transactions)
+    if not transactions:
+        logger.info("No transactions to write")
+    else:
+        with ApiClient(CONFIGURATION) as api_client:
+            api_instance = TransactionsApi(api_client)
+            data = SaveTransactionsWrapper(transactions=transactions)
 
-        try:
-            api_response = api_instance.create_transaction(YNAB_BUDGET_ID, data)
-            logger.info(api_response)
-        except ApiException as e:
-            logger.exception(e)
+            try:
+                api_response = api_instance.create_transaction(YNAB_BUDGET_ID, data)
+                logger.info(api_response)
+            except ApiException as e:
+                logger.exception(e)
+            else:
+                logger.info(f"{len(transactions)} transaction(s) written successfully")
 
 
 def lambda_handler(event, context):

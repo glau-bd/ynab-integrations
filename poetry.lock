@@ -591,7 +591,7 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "ynab-api"
-version = "2.0.0"
+version = "1.0.0"
 description = ""
 optional = false
 python-versions = ">=3.6"
@@ -605,10 +605,10 @@ urllib3 = ">=1.25.3"
 [package.source]
 type = "git"
 url = "https://github.com/dmlerner/ynab-api.git"
-reference = "HEAD"
-resolved_reference = "ed9f5a5f85d5135a06b3a7f358899b26ac24efc4"
+reference = "nullfix"
+resolved_reference = "9d6d72487d21700de128c4bed25c6e9215a7d036"
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "069128787769bd7f2cf78b25ac7fadba4e56dbaa1edea16ef3bca284a0a74cbc"
+content-hash = "f78eea05803c2afe7524677078fdd8fe951be8332feaf7fb4d0a377cd7922a9f"
