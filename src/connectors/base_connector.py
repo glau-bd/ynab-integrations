@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 from typing import List
 
-from src.utils.constants import CONNECTOR_CONFIG_PATH
+from ..utils.constants import CONNECTOR_CONFIG_PATH
 
 config_parser = ConfigParser()
 config_parser.read_file(open(CONNECTOR_CONFIG_PATH))

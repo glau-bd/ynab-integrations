@@ -1,2 +1,2 @@
-YNAB_CONFIG_PATH = "ynab_config.ini"
-CONNECTOR_CONFIG_PATH = "connector_config.ini"
+YNAB_CONFIG_PATH = "src/config/ynab_config.ini"
+CONNECTOR_CONFIG_PATH = "src/config/connector_config.ini"

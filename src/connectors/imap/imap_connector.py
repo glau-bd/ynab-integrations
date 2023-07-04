@@ -2,7 +2,7 @@ from typing import Generator
 
 from imap_tools import MailBox
 
-from src.connectors.base_connector import BaseConnector
+from ..base_connector import BaseConnector
 
 
 class ImapConnector(BaseConnector):

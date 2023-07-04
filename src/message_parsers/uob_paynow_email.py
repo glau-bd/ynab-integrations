@@ -6,8 +6,8 @@ from typing import Optional
 
 from dateutil import parser
 
-from src.message_parsers.base_parser import BaseMessageParser
-from src.utils.models import Transaction
+from ..utils.models import Transaction
+from .base_parser import BaseMessageParser
 
 logger = getLogger(__name__)
 

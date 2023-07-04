@@ -3,8 +3,8 @@ import re
 from abc import ABC, abstractmethod
 from configparser import ConfigParser
 
-from src.utils.constants import YNAB_CONFIG_PATH
-from src.utils.models import Transaction
+from ..utils.constants import YNAB_CONFIG_PATH
+from ..utils.models import Transaction
 
 logger = logging.getLogger(__name__)
 config_parser = ConfigParser()

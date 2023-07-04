@@ -1,5 +1,3 @@
-import logging
-import sys
 from configparser import ConfigParser
 from typing import Generator, List, Optional
 
@@ -7,17 +5,11 @@ from ynab_api import ApiClient, ApiException, Configuration
 from ynab_api.api.transactions_api import TransactionsApi
 from ynab_api.models import SaveTransaction, SaveTransactionsWrapper
 
-from src.connectors import get_active_connectors
-from src.message_parsers import BaseMessageParser, message_parsers
-from src.utils.constants import YNAB_CONFIG_PATH
-from src.utils.models import Transaction
-
-logger = logging.getLogger(__name__)
-handler = logging.StreamHandler(sys.stdout)
-handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+from . import logger
+from .connectors import get_active_connectors
+from .message_parsers import BaseMessageParser, message_parsers
+from .utils.constants import YNAB_CONFIG_PATH
+from .utils.models import Transaction
 
 config_parser = ConfigParser()
 config_parser.read_file(open(YNAB_CONFIG_PATH))
@@ -75,8 +67,7 @@ def write_transactions(transactions: List[SaveTransaction]):
             data = SaveTransactionsWrapper(transactions=transactions)
 
             try:
-                api_response = api_instance.create_transaction(YNAB_BUDGET_ID, data)
-                logger.info(api_response)
+                api_instance.create_transaction(YNAB_BUDGET_ID, data)
             except ApiException as e:
                 logger.exception(e)
             else:
