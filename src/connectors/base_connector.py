@@ -8,11 +8,13 @@ config_parser.read_file(open(CONNECTOR_CONFIG_PATH))
 
 
 class BaseConnector:
+    name: str
     active: bool = False
 
-    def __init__(self, **kwargs):
+    def __init__(self, name: str, active: str, **kwargs):
         try:
-            self.active = kwargs["active"] == "true"
+            self.active = active == "true"
+            self.name = name
         except KeyError as e:
             raise ValueError("Missing required argument") from e
 

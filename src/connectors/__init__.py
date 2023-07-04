@@ -1,9 +1,9 @@
 from configparser import ConfigParser
 from typing import Any, Dict, Generator, Type
 
-from src.connectors.base_connector import BaseConnector
-from src.connectors.imap.imap_connector import ImapConnector
-from src.utils.constants import CONNECTOR_CONFIG_PATH
+from ..utils.constants import CONNECTOR_CONFIG_PATH
+from .base_connector import BaseConnector
+from .imap.imap_connector import ImapConnector
 
 CONNECTORS: Dict[str, Type[BaseConnector]] = {ImapConnector.__name__: ImapConnector}
 
@@ -16,7 +16,10 @@ def get_connectors() -> Generator[BaseConnector, Any, None]:
         connector_type = config_parser.get(section, "connector_type", fallback=None)
         if connector_type:
             connector_class = CONNECTORS[connector_type]
-            connector = connector_class(**dict(config_parser[section]))
+            active = config_parser.get(section, "active", fallback="false")
+            connector = connector_class(
+                name=section, active=active, **dict(config_parser[section])
+            )
             yield connector
 
 

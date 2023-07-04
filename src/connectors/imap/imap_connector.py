@@ -10,8 +10,8 @@ class ImapConnector(BaseConnector):
     user: str
     password: str
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, name: str, active: str, **kwargs):
+        super().__init__(name, active, **kwargs)
         try:
             self.host = kwargs["host"]
             self.user = kwargs["user"]

@@ -1,29 +1,57 @@
 
-# Welcome to your CDK Python project!
+# ynab-integrations
 
-This is a blank project for CDK development with Python.
+The missing link between your banking notifications and You Need A Budget's (YNAB) API.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+This project uses AWS CDK to deploy an AWS Lambda function that fetches emails periodically via IMAP, parses them into transactions, and writes them to your YNAB Budget.
 
+## Prerequisites
+
+- YNAB Account and [YNAB Personal Access Token](https://api.ynab.com/#personal-access-tokens)
+- Email notifications from your bank
+  - If your bank is worth it's salt, you should be able to configure notifications with value thresholds such that you get email notifications for any and all transactions.
+- Email account with IMAP access
+- Python 3.10
+- AWS Account
+- [AWS CDK v2](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install)
+- Docker
+- Accounts configured
+
+## Getting Started
+
+1. Install AWS CDK
+```bash
+npm install -g aws-cdk
+```
+2. Install poetry
+```bash
 pip install poetry
+```
+3. Install dependencies
+```bash
 poetry install
+```
+4. Activate poetry shell
+```bash
 poetry shell
-At this point you can now synthesize the CloudFormation template for this code.
-
 ```
-$ cdk synth
+5. Configure your YNAB, Email and Account information in the config files
+   - Refer to the [config README](./src/config/README.md) for tips and best practices
+6. [Optional] If you haven't already done so, create resources needed for CDK to work.
+```bash
+cdk bootstrap
+```
+7. Test that a Cloudformation template can be created.
+```bash
+cdk synth
+```
+8. Deploy the stack.
+```bash
+cdk deploy
 ```
 
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
+## Supported banks/transaction types
 
-## Useful commands
+### United Overseas Bank (UOB)
 
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
-
-Enjoy!
+- [Paynow transfers](./src/config/README.md#uob_paynow_email_accounts)

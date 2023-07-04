@@ -32,6 +32,9 @@ class UobPaynowEmailParser(BaseMessageParser):
         transaction_datetime = match.group(3) + ", " + match.group(4)
         try:
             transaction_datetime = parser.parse(transaction_datetime, fuzzy=True)
+            transaction_datetime = self.get_timezone("Asia/Singapore").localize(
+                transaction_datetime
+            )
         except Exception as e:
             logger.warning(
                 "Failed to parse transaction datetime, using current time instead"

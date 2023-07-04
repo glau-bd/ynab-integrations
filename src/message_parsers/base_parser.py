@@ -2,6 +2,9 @@ import logging
 import re
 from abc import ABC, abstractmethod
 from configparser import ConfigParser
+from datetime import tzinfo
+
+import pytz
 
 from ..utils.constants import YNAB_CONFIG_PATH
 from ..utils.models import Transaction
@@ -28,3 +31,9 @@ class BaseMessageParser(ABC):
 
     def get_ynab_account_id(self, banking_account_identier: str) -> str:
         return config_parser[self.accounts_section][banking_account_identier]
+
+    def get_timezone(self, default_tz: str):
+        try:
+            return pytz.timezone(config_parser[self.accounts_section]["timezone"])
+        except Exception:
+            return pytz.timezone(default_tz)
