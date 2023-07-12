@@ -40,9 +40,7 @@ def parse_message(message: str) -> Optional[Transaction]:
         (parser for parser in message_parsers if parser.accepts(message)), None
     )
     if parser is None:
-        logger.warning(
-            f"No message parser found for message {message[:100]}..., skipping"
-        )
+        logger.warning(f"No message parser found for message {message[:]}..., skipping")
         return None
     transaction = parser.parse_message(message)
     logger.info(f"Transaction: {transaction}")

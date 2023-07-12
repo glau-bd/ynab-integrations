@@ -14,20 +14,22 @@ logger = getLogger(__name__)
 
 class UobPaynowEmailParser(BaseMessageParser):
     pattern = re.compile(
-        r"You made a PayNow transfer of .* ([\d.]+) to PayNow ID ending with ([\w]+) at\r?\n([\d:]+[APM]+), ([\d]+-[A-Za-z]+-\d+)"
+        r"You made a PayNow transfer of .* (\d*\.\d{2}) to PayNow ID ending with ([\w]+) at ([\d:]+[APM]+), ([\d]+-[A-Za-z]+-\d+)"
     )
     accounts_section = "uob_paynow_email_accounts"
 
     def accepts(self, message: str) -> bool:
+        message = self.replace_whitespace(message)
         return bool(self.pattern.search(message))
 
     def parse_message(self, message: str) -> Optional[Transaction]:
+        message = self.replace_whitespace(message)
         match = self.pattern.search(message)
 
         if not match:
             raise Exception("Message does not match pattern")
         amount: str = match.group(1)
-        value = int(Decimal(amount) * 100)
+        value = int(Decimal(amount) * -1000)
         paynow_id = match.group(2)
         transaction_datetime = match.group(3) + ", " + match.group(4)
         try:

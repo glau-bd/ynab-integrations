@@ -16,10 +16,9 @@ def get_connectors() -> Generator[BaseConnector, Any, None]:
         connector_type = config_parser.get(section, "connector_type", fallback=None)
         if connector_type:
             connector_class = CONNECTORS[connector_type]
-            active = config_parser.get(section, "active", fallback="false")
-            connector = connector_class(
-                name=section, active=active, **dict(config_parser[section])
-            )
+            kwargs = dict(config_parser[section])
+            active = kwargs.pop("active", "false")
+            connector = connector_class(name=section, active=active, **kwargs)
             yield connector
 
 

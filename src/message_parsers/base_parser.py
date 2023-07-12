@@ -25,6 +25,10 @@ class BaseMessageParser(ABC):
         """Check if the message is accepted by the parser"""
         raise NotImplementedError()
 
+    @classmethod
+    def replace_whitespace(cls, message: str) -> str:
+        return re.sub(r"\s+", " ", message)
+
     @abstractmethod
     def parse_message(self, message: str) -> Transaction:
         raise NotImplementedError()
