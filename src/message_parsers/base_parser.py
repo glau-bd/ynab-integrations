@@ -27,13 +27,15 @@ class BaseMessageParser(ABC):
 
     @classmethod
     def replace_whitespace(cls, message: str) -> str:
-        return re.sub(r"\s+", " ", message)
+        message = re.sub(r"\n", " ", message)
+        message = re.sub(r"\s+", " ", message)
+        return message
 
     @abstractmethod
     def parse_message(self, message: str) -> Transaction:
         raise NotImplementedError()
 
-    def get_ynab_account_id(self, banking_account_identier: str) -> str:
+    def get_ynab_account_id(self, banking_account_identier: str = "default") -> str:
         return config_parser[self.accounts_section][banking_account_identier]
 
     def get_timezone(self, default_tz: str):

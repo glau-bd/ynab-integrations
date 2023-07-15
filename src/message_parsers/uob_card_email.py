@@ -4,8 +4,6 @@ from decimal import Decimal
 from logging import getLogger
 from typing import Optional
 
-from dateutil import parser
-
 from ..utils.models import Transaction
 from .base_parser import BaseMessageParser
 
@@ -14,7 +12,7 @@ logger = getLogger(__name__)
 
 class UobCardEmailParser(BaseMessageParser):
     pattern = re.compile(
-        r"A transaction of SGD (\d*\.\d{2}) was made with your UOB Card ending ([\d]+) on (\d{2}/\d{2}/\d{2}) at ([A-Za-z/\s\d]+)\."
+        r"A transaction of SGD (\d*\.\d{2}) was made with your UOB Card ending ([\d]+) on (\d{2}\/\d{2}\/\d{2}) at ([A-Za-z\/\s\d]+)\."
     )
     accounts_section = "uob_card_email_accounts"
 

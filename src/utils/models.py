@@ -11,7 +11,7 @@ class Transaction(BaseModel):
     """
 
     account_id: str
-    amount: int
+    amount: Optional[int] = None
     timestamp: Union[int, float]
     memo: Optional[str] = None
     payee_id: Optional[str] = None
