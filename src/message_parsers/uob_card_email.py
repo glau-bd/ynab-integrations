@@ -46,7 +46,7 @@ class UobCardEmailParser(BaseMessageParser):
             account_id = self.get_ynab_account_id(card_num)
             assert account_id, "Account ID is empty"
         except Exception as e:
-            logger.warning("Failed to get YNAB account ID")
+            logger.warning(f"Failed to get YNAB account ID: {e}")
             return None
 
         return Transaction(

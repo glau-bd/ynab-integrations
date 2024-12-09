@@ -2,7 +2,7 @@ import logging
 import re
 from abc import ABC, abstractmethod
 from configparser import ConfigParser
-from datetime import tzinfo
+from typing import Optional
 
 import pytz
 
@@ -32,7 +32,7 @@ class BaseMessageParser(ABC):
         return message
 
     @abstractmethod
-    def parse_message(self, message: str) -> Transaction:
+    def parse_message(self, message: str) -> Optional[Transaction]:
         raise NotImplementedError()
 
     def get_ynab_account_id(self, banking_account_identier: str = "default") -> str:

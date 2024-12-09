@@ -38,6 +38,7 @@ the opinion of UOB or any entity in the UOB Group.
         approved=False,
     )
 
+
 def test_parse_uob_card_message():
     email_body = """
 ---------- Forwarded message ---------
