@@ -26,7 +26,7 @@ class Transaction:
     def to_savetransaction(self) -> SaveTransaction:
         return SaveTransaction(
             account_id=self.account_id,
-            date=datetime.fromtimestamp(self.timestamp),
+            date=datetime.fromtimestamp(self.timestamp).date(),
             amount=self.amount,
             payee_id=self.payee_id,
             payee_name=self.payee_name,
