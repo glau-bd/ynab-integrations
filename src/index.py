@@ -9,7 +9,7 @@ from . import logger
 from .connectors import get_active_connectors
 from .message_parsers import BaseMessageParser, message_parsers
 from .utils.constants import YNAB_CONFIG_PATH
-from .utils.models import Transaction
+from .utils.models import Transaction, Message
 
 config_parser = ConfigParser()
 config_parser.read_file(open(YNAB_CONFIG_PATH))
@@ -26,21 +26,23 @@ CONFIGURATION = Configuration(
 )
 
 
-def fetch_messages() -> Generator[str, None, None]:
+def fetch_messages() -> Generator[Message, None, None]:
     """Fetch messages from all active connectors."""
     for connector in get_active_connectors():
         for message in connector.get_unread_messages_inbox():
             yield message
 
 
-def parse_message(message: str) -> Optional[Transaction]:
+def parse_message(message: Message) -> Optional[Transaction]:
     """Parse a message using the first parser that accepts it."""
     parser: Optional[BaseMessageParser] = None
     parser = next(
         (parser for parser in message_parsers if parser.accepts(message)), None
     )
     if parser is None:
-        logger.warning(f"No message parser found for message {message[:]}..., skipping")
+        logger.warning(
+            f"No message parser found for message {message.body}..., skipping"
+        )
         return None
     transaction = parser.parse_message(message)
     logger.info(f"Transaction: {transaction}")

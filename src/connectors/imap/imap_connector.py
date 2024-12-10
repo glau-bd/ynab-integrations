@@ -3,6 +3,7 @@ from typing import Generator
 from imap_tools import MailBox
 
 from ..base_connector import BaseConnector
+from ...utils.models import Message
 
 
 class ImapConnector(BaseConnector):
@@ -19,10 +20,10 @@ class ImapConnector(BaseConnector):
         except KeyError as e:
             raise ValueError("Missing required argument") from e
 
-    def get_unread_messages_inbox(self) -> Generator[str, None, None]:
+    def get_unread_messages_inbox(self) -> Generator[Message, None, None]:
         """Get unread messages from the inbox, and mark as read"""
         with MailBox(self.host).login(self.user, self.password) as mailbox:
             for msg in mailbox.fetch(
                 criteria="UNSEEN",
             ):
-                yield msg.text
+                yield Message(body=msg.text, datetime=msg.date)

@@ -1,18 +1,20 @@
-from datetime import date
+from re import sub
+from datetime import datetime
+from functools import cached_property
 from typing import Optional, Union
 
-from pydantic import BaseModel
+from dataclasses import dataclass
 from ynab_api.models import SaveTransaction
 
 
-class Transaction(BaseModel):
+@dataclass
+class Transaction:
     """
     Intermediary class that loads basic primitive types from a dict.
     """
-
     account_id: str
-    amount: Optional[int] = None
     timestamp: Union[int, float]
+    amount: Optional[int] = None
     memo: Optional[str] = None
     payee_id: Optional[str] = None
     payee_name: Optional[str] = None
@@ -24,7 +26,7 @@ class Transaction(BaseModel):
     def to_savetransaction(self) -> SaveTransaction:
         return SaveTransaction(
             account_id=self.account_id,
-            date=date.fromtimestamp(self.timestamp),
+            date=datetime.fromtimestamp(self.timestamp),
             amount=self.amount,
             payee_id=self.payee_id,
             payee_name=self.payee_name,
@@ -36,3 +38,16 @@ class Transaction(BaseModel):
 
     def key(self) -> str:
         return f"{self.account_id}-{self.timestamp}-{self.amount}"
+
+
+@dataclass(frozen=True)
+class Message:
+    body: str
+    datetime: datetime
+
+    @cached_property
+    def replace_whitespace(self) -> str:
+        body = self.body
+        body = sub(r"\n", " ", body)
+        body = sub(r"\s+", " ", body)
+        return body

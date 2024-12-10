@@ -1,7 +1,8 @@
 from configparser import ConfigParser
-from typing import List
+from typing import Iterable
 
 from ..utils.constants import CONNECTOR_CONFIG_PATH
+from ..utils.models import Message
 
 config_parser = ConfigParser()
 config_parser.read_file(open(CONNECTOR_CONFIG_PATH))
@@ -22,6 +23,6 @@ class BaseConnector:
         """Run authentication process for the connector if needed"""
         raise NotImplementedError()
 
-    def get_unread_messages_inbox(self) -> List[str]:
+    def get_unread_messages_inbox(self) -> Iterable[Message]:
         """Get unread messages from the inbox"""
         raise NotImplementedError

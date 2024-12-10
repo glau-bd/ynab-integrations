@@ -7,7 +7,7 @@ from typing import Optional
 import pytz
 
 from ..utils.constants import YNAB_CONFIG_PATH
-from ..utils.models import Transaction
+from ..utils.models import Transaction, Message
 
 logger = logging.getLogger(__name__)
 config_parser = ConfigParser()
@@ -21,18 +21,12 @@ class BaseMessageParser(ABC):
     accounts_section: str
 
     @abstractmethod
-    def accepts(self, message: str) -> bool:
+    def accepts(self, message: Message) -> bool:
         """Check if the message is accepted by the parser"""
         raise NotImplementedError()
 
-    @classmethod
-    def replace_whitespace(cls, message: str) -> str:
-        message = re.sub(r"\n", " ", message)
-        message = re.sub(r"\s+", " ", message)
-        return message
-
     @abstractmethod
-    def parse_message(self, message: str) -> Optional[Transaction]:
+    def parse_message(self, message: Message) -> Optional[Transaction]:
         raise NotImplementedError()
 
     def get_ynab_account_id(self, banking_account_identier: str = "default") -> str:
