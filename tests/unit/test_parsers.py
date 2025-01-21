@@ -77,3 +77,47 @@ the opinion of UOB or any entity in the UOB Group.
         flag_color=None,
         approved=False,
     )
+
+
+def test_parse_citi_card_message():
+    email_body = """
+---------- Forwarded message ---------
+From: Citibank Singapore <alerts@citibank.com.sg>
+Date: Mon, Jan 6, 2025 at 2:54 PM
+Subject: Citi Alerts - Credit Card/Ready Credit Transaction
+To: <GERALD.LAU.95@gmail.com>
+
+
+Dear Customer,
+We would like to inform you that there is a charge made on your Citi PremierMiles Card:
+
+
+Account Number           : XXXX-XXXX-XXXX-7354
+Transaction date         : 06/01/25
+Transaction time         : 14:54:02
+Transaction amount       : SGD5502.60
+Transaction  details     : KKH PTE LTD            SINGAPORE     SGP
+
+
+Thank you for using Citi Alerts.
+
+Citibank Online
+Citibank Singapore Ltd
+Co.Reg. No. 200309485K
+
+Please do not reply to this email. To view or amend your Citi Alerts Profile, simply login to Citibank Online with your username and password. Alternatively, you may call our 24-Hour CitiPhone hotline available on our Citibank website for assistance or any other enquiries.
+"""
+    message = Message(
+        email_body, datetime(2024, 1, 1)
+    )
+    assert parse_message(message) == Transaction(
+        account_id="59e55c96-cda8-4dba-be30-4ff2059ddbbb",
+        amount=-5502600,
+        timestamp=1704038400.0,
+        payee_id=None,
+        payee_name="KKH PTE LTD SINGAPORE SGP",
+        category_id=None,
+        cleared=None,
+        flag_color=None,
+        approved=False,
+    )

@@ -6,6 +6,7 @@ from .uob_giro_email import UobGiroEmailParser
 from .uob_paynow_email import UobPaynowEmailParser
 from .uob_fast_email import UobFastEmailParser
 from .uob_card_email import UobCardEmailParser
+from .citi_card_email import CitiCardEmailParser
 
 message_parsers: List[BaseMessageParser] = [
     UobAtmEmailParser(),
@@ -13,4 +14,5 @@ message_parsers: List[BaseMessageParser] = [
     UobPaynowEmailParser(),
     UobFastEmailParser(),
     UobCardEmailParser(),
+    CitiCardEmailParser(),
 ]
